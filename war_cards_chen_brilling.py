@@ -1,3 +1,6 @@
+import random
+
+
 class Card:
     def __init__(self, val, suite):
         self.suite = suite
@@ -27,3 +30,7 @@ class Card:
         
     def __lt__(self, other):
         return self.val > other.val
+
+
+
+    
