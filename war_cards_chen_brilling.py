@@ -1,3 +1,4 @@
+from calendar import c
 import random
 from threading import get_native_id
 
@@ -168,10 +169,42 @@ class WarGame:
         if self.d1 == self.d2:
             print("IT'S A TIE!")
 
-test = WarGame(False)
+class LimitedWarGame(WarGame):
+    def __init__(self, has_jokers, rounds):
+        self.rounds = rounds
+        self.card_pile = []
+        self.d1 = []
+        self.d2 = []
+
+        if not isinstance(has_jokers, bool):
+            raise TypeError("Please define the game-mode with boolean values")
+
+        if has_jokers == True:
+            self.d1 = JokerDeck()
+            self.d2 = JokerDeck()
+        else:
+            self.d1 = Deck()
+            self.d2 = Deck()
+            
+    def run_game(self):
+        self.i = 1
+        print("STARTING WAR...")
+        while self.i < self.rounds+1:
+            self.round()
+            self.i+=1
+        
+        if self.d1 < self.d2:
+            print("PLAYER 1 IS THE VICTOR!")
+        if self.d1 > self.d2:
+            print("PLAYER 2 IS THE VICTOR!")
+        if self.d1 == self.d2:
+            print("IT'S A TIE!")
+
+
+test = LimitedWarGame(False, 5)
 print(test.run_game())
 print(test.d1)
 print(test.d2)
-print(test.card_pile)
+
 
 
