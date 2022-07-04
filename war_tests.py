@@ -1,11 +1,13 @@
+from war_cards_chen_brilling import *
+
 # in order for this file to work, you must put it in the same directory (folder) as your assignment file,
 # and add "from <your file name> import *" at the beginning
 # for example, if my assignment file is named 'war_cards_itamar_shturm.py', I will add right below here the line:
 # from war_cards_itamar_shturm import *
 
-# c1 = Card(5, 'heart')
+# c1 = Card(5, "heart")
 # c2 = Card(14, None)
-# c3 = Card(11, 'club')
+# c3 = Card(11, "club")
 
 # print(c1)
 # print(c2)
@@ -14,7 +16,7 @@
 
 # c4 = Card(5, 'bla')
 # c5 = Card(16, 'heart')
-# c6 = Card(14, 'heart')
+# c6 = Card(14, "heart")
 # c7 = Card(7, None)
 
 # d1 = Deck()

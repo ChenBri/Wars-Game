@@ -24,7 +24,9 @@ class Card:
             or self.val != 14
             and self.suite == None
         ):
-            raise ValueError("While val is equal to 14, its suite must be None")
+            raise ValueError(
+                "While val is equal to 14, its suite must be None (or the other way around)"
+            )
 
         # Capitialize the `suite`
         if self.suite != None:
@@ -74,9 +76,6 @@ class Deck:
         # Shuffle the deck
         random.shuffle(self.card_list)
 
-    def __repr__(self):
-        return str(self.card_list)
-
     def draw_card(self):
         if len(self.card_list) == 0:
             return None
@@ -110,10 +109,10 @@ class Deck:
         return f"A Deck Containing {len(self.card_list)} Cards"
 
     def __lt__(self, other):
-        return len(self.card_list) > len(other.card_list)
+        return len(self.card_list) < len(other.card_list)
 
     def __gt__(self, other):
-        return len(self.card_list) < len(other.card_list)
+        return len(self.card_list) > len(other.card_list)
 
     def __eq__(self, other):
         return len(self.card_list) == len(other.card_list)
