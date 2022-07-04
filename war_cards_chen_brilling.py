@@ -77,14 +77,22 @@ class Deck:
     def __lt__(self, other):
         return len(self.card_list) > len(other.card_list)
 
-
-
+class JokerDeck(Deck):
+         def __init__(self):
+            self.card_list = []
+            for s in ['Spade', 'Club', 'Diamond', 'Heart'] :
+                    for v in range (1 , 14) :
+                        self.card_list.append(Card(v , s))
+            count = 0
+            while count < 2:
+                self.card_list.append(Card(14 , None))
+                count+=1
+            random.shuffle(self.card_list)
+          
     
-test = Deck()
-test2 = Deck()
-test.draw_multiple(5)
+test = JokerDeck()
+print(test.card_list)
 
-print(test>test2)
 
 
     
