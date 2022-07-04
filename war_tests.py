@@ -5,14 +5,14 @@ from war_cards_chen_brilling import *
 # for example, if my assignment file is named 'war_cards_itamar_shturm.py', I will add right below here the line:
 # from war_cards_itamar_shturm import *
 
-# c1 = Card(5, "heart")
-# c2 = Card(14, None)
-# c3 = Card(11, "club")
+# c1 = Card(11, "heart")
+# c2 = Card(11, "club")
+# c3 = Card(14, None)
 
 # print(c1)
 # print(c2)
-# print(c3 > c2)
-# print(c1 < c2)
+# print(c3 == c2)
+# print(c1 == c2)
 
 # c4 = Card(5, 'bla')
 # c5 = Card(16, 'heart')
@@ -36,7 +36,7 @@ from war_cards_chen_brilling import *
 # deck1 = Deck()
 # deck2 = Deck()
 # c = deck2.draw_card()
-# print(deck1 > deck2)
+# print(deck1 == deck2)
 
 # d2 = JokerDeck()
 # print(d2)
