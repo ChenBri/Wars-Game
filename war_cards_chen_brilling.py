@@ -230,7 +230,7 @@ class LimitedWarGame(WarGame):
             self.round(i)
             i += 1
 
-            if i >= self.rounds:
+            if i >= self.rounds + 1:
                 if self.d1 > self.d2:
                     print("PLAYER 1 IS THE VICTOR!")
                     return
@@ -240,3 +240,13 @@ class LimitedWarGame(WarGame):
                 if self.d1 == self.d2:
                     print("IT'S A TIE!")
                     return
+
+        if self.d1 > self.d2:
+            print("PLAYER 1 IS THE VICTOR!")
+            return
+        if self.d1 < self.d2:
+            print("PLAYER 2 IS THE VICTOR!")
+            return
+        if self.d1 == self.d2:
+            print("IT'S A TIE!")
+            return
