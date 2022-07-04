@@ -32,5 +32,59 @@ class Card:
         return self.val > other.val
 
 
+class Deck:
+    def __init__(self):
+        self.card_list = []
+        for s in ['Spade', 'Club', 'Diamond', 'Heart'] :
+                for v in range (1 , 14) :
+                     self.card_list.append(Card(v , s))
+        random.shuffle(self.card_list)            
+
+    def __repr__(self):
+        return str(self.card_list)
+
+    def draw_card(self):
+        if len(self.card_list)==0:
+            return None
+        else:
+            self.card_list = self.card_list[1:] + [self.card_list[0]]
+            return self.card_list
+
+    def draw_multiple(self, num):
+        throwenCards = []
+
+        if len(self.card_list) < num:
+            return None
+        else:
+            throwenCards = self.card_list[:num]
+            self.card_list = self.card_list[num:]
+            return throwenCards
+
+    def shuffle(self):
+        random.shuffle(self.card_list)
+        return self.card_list
+
+    def reset(self):
+        self.card_list = []
+        for s in ['Spade', 'Club', 'Diamond', 'Heart'] :
+                for v in range (1 , 14) :
+                     self.card_list.append(Card(v , s))
+        random.shuffle(self.card_list)
+
+    def __repr__(self):
+        return f'A Deck Containing {len(self.card_list)} Cards'
+
+    def __lt__(self, other):
+        return len(self.card_list) > len(other.card_list)
+
+
+
+    
+test = Deck()
+test2 = Deck()
+test.draw_multiple(5)
+
+print(test>test2)
+
 
     
