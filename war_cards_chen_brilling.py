@@ -104,6 +104,7 @@ class Deck:
             for v in range(1, 14):
                 self.card_list.append(Card(v, s))
         random.shuffle(self.card_list)
+        return self.card_list
 
     def __repr__(self):
         return f"A Deck Containing {len(self.card_list)} Cards"
@@ -125,20 +126,15 @@ class JokerDeck(Deck):
         for s in ["Spade", "Club", "Diamond", "Heart"]:
             for v in range(1, 14):
                 self.card_list.append(Card(v, s))
-        count = 0
-        while count < 2:
-            self.card_list.append(Card(14, None))
-            count += 1
+
+        self.card_list.append(Card(14, None))
+        self.card_list.append(Card(14, None))
+
         random.shuffle(self.card_list)
 
 
 class WarGame:
     def __init__(self, has_jokers):
-
-        # Declaring empty variables
-        self.card_pile = []
-        self.d1 = []
-        self.d2 = []
 
         if not isinstance(has_jokers, bool):
             raise TypeError("Please define the game-mode with boolean values")
@@ -162,10 +158,11 @@ class WarGame:
                 self.d2.card_list += self.card_pile
                 self.card_pile = []
 
-    def round(self):
+    def round(self, i):
+
         player1Card = self.d1.draw_card()
         player2Card = self.d2.draw_card()
-        print(f"Round {self.i}: {player1Card} vs {player2Card}")
+        print(f"Round {i}: {player1Card} vs {player2Card}")
 
         self.card_pile.append(player1Card)
         self.card_pile.append(player2Card)
@@ -179,7 +176,7 @@ class WarGame:
             self.give_pile(2)
 
         if player1Card == player2Card:
-            print("War!\n.\n.\n.\n ")
+            print("War!\n.\n.\n.\n")
             # In case one of the players can't draw 3 cards, both players will draw the maximum amount of cards he has
             # For example, if one player only has 2 cards in his hand, both players will draw 2 cards, not 3.
             if len(self.d1.card_list) < 3 or len(self.d2.card_list) < 3:
@@ -193,17 +190,17 @@ class WarGame:
 
     def run_game(self):
         # Number of round
-        self.i = 1
+        i = 1
 
         print("STARTING WAR...")
         # While both players still have cards
-        while len(self.d1.card_list) > 0 and len(self.d2.card_list):
-            self.round()
-            self.i += 1
+        while len(self.d1.card_list) > 0 and len(self.d2.card_list) > 0:
+            self.round(i)
+            i += 1
 
-        if self.d1 < self.d2:
-            print("PLAYER 1 IS THE VICTOR!")
         if self.d1 > self.d2:
+            print("PLAYER 1 IS THE VICTOR!")
+        if self.d1 < self.d2:
             print("PLAYER 2 IS THE VICTOR!")
         if self.d1 == self.d2:
             print("IT'S A TIE!")
@@ -227,22 +224,19 @@ class LimitedWarGame(WarGame):
             self.d2 = Deck()
 
     def run_game(self):
-        self.i = 1
+        i = 1
         print("STARTING WAR...")
-        while self.i < self.rounds + 1:
-            self.round()
-            self.i += 1
+        while len(self.d1.card_list) > 0 and len(self.d2.card_list) > 0:
+            self.round(i)
+            i += 1
 
-        if self.d1 < self.d2:
-            print("PLAYER 1 IS THE VICTOR!")
-        if self.d1 > self.d2:
-            print("PLAYER 2 IS THE VICTOR!")
-        if self.d1 == self.d2:
-            print("IT'S A TIE!")
-
-
-# game = WarGame(True)
-# game = LimitedWarGame(False, 500)
-# print(game.run_game())
-# print(game.d1)
-# print(game.d2)
+            if i >= self.rounds:
+                if self.d1 > self.d2:
+                    print("PLAYER 1 IS THE VICTOR!")
+                    return
+                if self.d1 < self.d2:
+                    print("PLAYER 2 IS THE VICTOR!")
+                    return
+                if self.d1 == self.d2:
+                    print("IT'S A TIE!")
+                    return
