@@ -125,10 +125,10 @@ class WarGame:
 
             
 
-    def round (self, i):
+    def round (self):
         player1Card = self.d1.draw_card()
         player2Card = self.d2.draw_card()
-        print(f'Round {i}: {player1Card} vs {player2Card}')
+        print(f'Round {self.i}: {player1Card} vs {player2Card}')
 
         self.card_pile.append(player1Card)
         self.card_pile.append(player2Card)
@@ -143,17 +143,35 @@ class WarGame:
 
         if player1Card == player2Card:
             print('War!\n.\n.\n.\n ')
-            self.card_pile += self.d1.draw_multiple(3)
-            self.card_pile += self.d2.draw_multiple(3)
+            if len(self.d1.card_list) < 3 or len(self.d2.card_list) < 3: 
+                smallerDeck = min([len(self.d1.card_list), len(self.d2.card_list)])
+                self.card_pile += self.d1.draw_multiple(smallerDeck)
+                self.card_pile += self.d2.draw_multiple(smallerDeck)
+            else:
+                self.card_pile += self.d1.draw_multiple(3)
+                self.card_pile += self.d2.draw_multiple(3)
+            
 
         
 
+    def run_game(self):
+        self.i = 1
+        print("STARTING WAR...")
+        while len(self.d1.card_list) > 0 and len(self.d2.card_list):
+            self.round()
+            self.i+=1
+        
+        if self.d1 < self.d2:
+            print("PLAYER 1 IS THE VICTOR!")
+        if self.d1 > self.d2:
+            print("PLAYER 2 IS THE VICTOR!")
+        if self.d1 == self.d2:
+            print("IT'S A TIE!")
 
 test = WarGame(False)
-print(test.d1)
-print(test.d2)
-print(test.round(1))
+print(test.run_game())
 print(test.d1)
 print(test.d2)
 print(test.card_pile)
+
 
