@@ -2,10 +2,13 @@ import random
 
 
 class Card:
+
+    # General testing to check if the attributes are valid
     def __init__(self, val, suite):
         self.suite = suite
         self.val = val
 
+        # Transform `suits` into lower case
         if suite != None:
             self.suite = suite.lower()
 
@@ -21,8 +24,9 @@ class Card:
             or self.val != 14
             and self.suite == None
         ):
-            raise ValueError("While val is equal to 14, his suite must be None")
+            raise ValueError("While val is equal to 14, its suite must be None")
 
+        # Capitialize the `suite`
         if self.suite != None:
             self.suite = suite.capitalize()
 
@@ -59,11 +63,15 @@ class Card:
 
 
 class Deck:
+
+    # Create a new deck of cards (52 cards)
     def __init__(self):
         self.card_list = []
         for s in ["Spade", "Club", "Diamond", "Heart"]:
             for v in range(1, 14):
                 self.card_list.append(Card(v, s))
+
+        # Shuffle the deck
         random.shuffle(self.card_list)
 
     def __repr__(self):
@@ -91,6 +99,7 @@ class Deck:
         return self.card_list
 
     def reset(self):
+        # Reset the game, hand out new shuffled decks
         self.card_list = []
         for s in ["Spade", "Club", "Diamond", "Heart"]:
             for v in range(1, 14):
@@ -103,8 +112,15 @@ class Deck:
     def __lt__(self, other):
         return len(self.card_list) > len(other.card_list)
 
+    def __gt__(self, other):
+        return len(self.card_list) < len(other.card_list)
+
+    def __eq__(self, other):
+        return len(self.card_list) == len(other.card_list)
+
 
 class JokerDeck(Deck):
+    # Create a deck of cards including 2 Jokers (54 cards)
     def __init__(self):
         self.card_list = []
         for s in ["Spade", "Club", "Diamond", "Heart"]:
@@ -119,6 +135,8 @@ class JokerDeck(Deck):
 
 class WarGame:
     def __init__(self, has_jokers):
+
+        # Declaring empty variables
         self.card_pile = []
         self.d1 = []
         self.d2 = []
@@ -126,14 +144,16 @@ class WarGame:
         if not isinstance(has_jokers, bool):
             raise TypeError("Please define the game-mode with boolean values")
 
-        if has_jokers == True:
+        # Creating decks depending on the game mode (With or without jokers)
+        if has_jokers == True:  # 54 cards each
             self.d1 = JokerDeck()
             self.d2 = JokerDeck()
-        else:
+        else:  # 52 cards each
             self.d1 = Deck()
             self.d2 = Deck()
 
     def give_pile(self, player):
+        # After a player wins a round, give him the draw pile (as long as the pile isn't empty)
         if len(self.card_pile) > 0:
             if player == 1:
                 self.d1.card_list += self.card_pile
@@ -161,17 +181,23 @@ class WarGame:
 
         if player1Card == player2Card:
             print("War!\n.\n.\n.\n ")
+            # In case one of the players can't draw 3 cards, both players will draw the maximum amount of cards he has
+            # For example, if one player only has 2 cards in his hand, both players will draw 2 cards, not 3.
             if len(self.d1.card_list) < 3 or len(self.d2.card_list) < 3:
                 smallerDeck = min([len(self.d1.card_list), len(self.d2.card_list)])
                 self.card_pile += self.d1.draw_multiple(smallerDeck)
                 self.card_pile += self.d2.draw_multiple(smallerDeck)
+            # Regular situation when both players can draw 3 cards
             else:
                 self.card_pile += self.d1.draw_multiple(3)
                 self.card_pile += self.d2.draw_multiple(3)
 
     def run_game(self):
+        # Number of round
         self.i = 1
+
         print("STARTING WAR...")
+        # While both players still have cards
         while len(self.d1.card_list) > 0 and len(self.d2.card_list):
             self.round()
             self.i += 1
