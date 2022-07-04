@@ -1,5 +1,5 @@
 import random
-
+from threading import get_native_id
 
 class Card:
     def __init__(self, val, suite):
@@ -29,7 +29,13 @@ class Card:
             return f'{arr[self.val-1]}'
         
     def __lt__(self, other):
+        return self.val < other.val
+
+    def __gt__(self, other):
         return self.val > other.val
+
+    def __eq__(self, other):
+        return self.val == other.val
 
 
 class Deck:
@@ -47,8 +53,8 @@ class Deck:
         if len(self.card_list)==0:
             return None
         else:
-            self.card_list = self.card_list[1:] + [self.card_list[0]]
-            return self.card_list
+            firstCard = self.card_list.pop(0)
+            return firstCard
 
     def draw_multiple(self, num):
         throwenCards = []
@@ -89,10 +95,65 @@ class JokerDeck(Deck):
                 count+=1
             random.shuffle(self.card_list)
           
-    
-test = JokerDeck()
-print(test.card_list)
+class WarGame:
+    def __init__(self, has_jokers):
+        self.card_pile = []
+        self.d1 = []
+        self.d2 = []
+
+        if not isinstance(has_jokers, bool):
+            raise TypeError("Please define the game-mode with boolean values")
+
+        if has_jokers == True:
+            self.d1 = JokerDeck()
+            self.d2 = JokerDeck()
+        else:
+            self.d1 = Deck()
+            self.d2 = Deck()
+        
+        
+    def give_pile(self, player):
+        if len(self.card_pile) > 0:
+            if player==1:
+                self.d1.card_list += self.card_pile
+                self.card_pile = []
+                
+                
+            elif player==2:
+                self.d2.card_list += self.card_pile
+                self.card_pile = []
+
+            
+
+    def round (self, i):
+        player1Card = self.d1.draw_card()
+        player2Card = self.d2.draw_card()
+        print(f'Round {i}: {player1Card} vs {player2Card}')
+
+        self.card_pile.append(player1Card)
+        self.card_pile.append(player2Card)
+
+        if player1Card > player2Card:
+            print('Player 1 Won\n')
+            self.give_pile(1)
+
+        if player1Card < player2Card:
+            print('Player 2 Won\n')
+            self.give_pile(2)
+
+        if player1Card == player2Card:
+            print('War!\n.\n.\n.\n ')
+            self.card_pile += self.d1.draw_multiple(3)
+            self.card_pile += self.d2.draw_multiple(3)
+
+        
 
 
+test = WarGame(False)
+print(test.d1)
+print(test.d2)
+print(test.round(1))
+print(test.d1)
+print(test.d2)
+print(test.card_pile)
 
-    
