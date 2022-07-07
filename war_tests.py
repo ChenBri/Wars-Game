@@ -11,10 +11,11 @@ from war_cards_chen_brilling import *
 
 # print(c1)
 # print(c2)
-# print(c3 == c2)
+# print(c3)
+# print(c3 < c2)
 # print(c1 == c2)
 
-# c4 = Card(5, 'bla')
+# c4 = Card(5, "bla")
 # c5 = Card(16, 'heart')
 # c6 = Card(14, "heart")
 # c7 = Card(7, None)
@@ -36,7 +37,7 @@ from war_cards_chen_brilling import *
 # deck1 = Deck()
 # deck2 = Deck()
 # c = deck2.draw_card()
-# print(deck1 == deck2)
+# print(deck1 < deck2)
 
 # d2 = JokerDeck()
 # print(d2)
@@ -52,5 +53,8 @@ from war_cards_chen_brilling import *
 # d2.reset()
 # print(d2)
 
-# lg = LimitedWarGame(True, 500)
+# lg = LimitedWarGame(True, 50)
+
 # lg.run_game()
+# print(lg.d1)
+# print(lg.d2)

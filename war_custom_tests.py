@@ -52,7 +52,5 @@ from war_cards_chen_brilling import *
 # var = LimitedWarGame(True, 1000)
 # var = LimitedWarGame(True, 10000)
 # var = LimitedWarGame(True, 100000)
-
-
-var = LimitedWarGame(True, 55)
-print(var.run_game())
+# var = LimitedWarGame(True, 55)
+# print(var.run_game())
